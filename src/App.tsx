@@ -1,26 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import Lot from "./Lot/Lot";
 
-function App() {
+const getRandom = (max: number, min: number): number => {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+};
+
+const App: React.FC = () => {
+  const [lots, setLots] = useState([
+    { children: 1 },
+    { children: 2 },
+    { children: 3 },
+    { children: 4 },
+    { children: 5 },
+  ]);
+  const changeNumbers = () => {
+    setLots(() => {
+      const result = [];
+      for (let i = 0; i < 5; ++i) {
+        result[i] = { children: getRandom(5, 36) };
+      }
+      return result;
+    });
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="lot-wrapper">
+        <Lot>{lots[0].children}</Lot>
+        <Lot>{lots[1].children}</Lot>
+        <Lot>{lots[2].children}</Lot>
+        <Lot>{lots[3].children}</Lot>
+        <Lot>{lots[4].children}</Lot>
+      </div>
+      <div className="btn-wrapper">
+        <button onClick={changeNumbers}>Change Numbers!</button>
+      </div>
     </div>
   );
-}
+};
 
 export default App;

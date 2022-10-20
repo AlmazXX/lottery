@@ -1,14 +1,13 @@
 import React from 'react';
+import './Lot.css';
 
-interface LotProps {
-  number: number;
+interface LotProps extends React.PropsWithChildren{
+  children: number;
 }
 
-const Lot: React.FC<LotProps> = props => {
+const Lot: React.FC<LotProps> = ({children}) => {
   return (
-    <div className='Lot-wrapper'>
-      <span className='lot-number'>{props.number}</span>
-    </div>
+      <span className='lot'>{children}</span>
   );
 };
 
