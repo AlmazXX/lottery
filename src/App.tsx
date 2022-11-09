@@ -6,32 +6,26 @@ const getRandom = (max: number, min: number): number => {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
-const App: React.FC = () => {
-  const [lots, setLots] = useState([
-    { children: 1 },
-    { children: 2 },
-    { children: 3 },
-    { children: 4 },
-    { children: 5 },
-  ]);
+const App = () => {
+  const [lots, setLots] = useState<number[]>([]);
+
   const changeNumbers = () => {
-    setLots(() => {
-      const result = [];
-      for (let i = 0; i < 5; ++i) {
-        result[i] = { children: getRandom(5, 36) };
+    const numbers: number[] = [];
+    while (numbers.length < 5) {
+      const newNumber = getRandom(5, 36);
+      if (!numbers.includes(newNumber)) {
+        numbers.push(newNumber)
       }
-      return result;
-    });
+    }
+    setLots([...numbers]);
   };
 
   return (
     <div className="App">
       <div className="lot-wrapper">
-        <Lot>{lots[0].children}</Lot>
-        <Lot>{lots[1].children}</Lot>
-        <Lot>{lots[2].children}</Lot>
-        <Lot>{lots[3].children}</Lot>
-        <Lot>{lots[4].children}</Lot>
+        {lots.map((lot) => (
+          <Lot value={lot} />
+        ))}
       </div>
       <div className="btn-wrapper">
         <button onClick={changeNumbers}>Change Numbers!</button>
